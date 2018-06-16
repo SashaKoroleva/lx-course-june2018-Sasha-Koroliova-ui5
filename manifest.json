@@ -1,0 +1,95 @@
+{
+    "_version": "1.1.0",
+    "sap.app": {
+        "_version": "1.1.0",
+        "id": "sasha.koroliova.app",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui": {
+        "_version": "1.1.0",
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "supportedThemes": [
+            "sap_belize"
+        ]
+    },
+    "sap.ui5": {
+        "_version": "1.1.0",
+        "rootView": "sasha.koroliova.app.view.App",
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "sasha.koroliova.app.view",
+                "controlId": "RootApp",
+                "controlAggregation": "pages",
+                "bypassed": {
+                    "target": [
+                        "notFound"
+                    ]
+                },
+                "async": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "OrdersOverview",
+                    "target": [
+                        "ordersOverview"
+                    ]
+                },
+                {
+                    "pattern": "OrderDetails",
+                    "name": "OrderDetails",
+                    "target": [
+                        "orderDetails"
+                    ]
+                },
+                {
+                    "pattern": "ProductDetails",
+                    "name": "ProductDetails",
+                    "target": [
+                        "productDetails"
+                    ]
+                }
+            ],
+            "targets": {
+                "ordersOverview": {
+                    "viewName": "OrdersOverview",
+                    "viewId": "ordersOverview",
+                    "viewLevel": 1
+                },
+                "orderDetails": {
+                    "viewName": "OrderDetails",
+                    "viewId": "orderDetails",
+                    "viewLevel": 2
+                },
+                "productDetails": {
+                    "viewName": "ProductDetails",
+                    "viewId": "productDetails",
+                    "viewLevel": 3
+                },
+                "notFound": {
+                    "viewName": "NotFound",
+                    "viewId": "notFound"
+                }
+            }
+        },
+        "dependencies": {
+            "minUI5Version": "1.44.19",
+            "libs": {
+                "sap.m": {}
+            }
+        }
+    }
+}
