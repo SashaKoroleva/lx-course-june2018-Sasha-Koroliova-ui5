@@ -1,7 +1,6 @@
 <mvc:View
         xmlns:mvc="sap.ui.core.mvc"
         xmlns="sap.m">
-
     <MessagePage
             title="Not Found"
             text="The requested resource was not found"
@@ -9,5 +8,4 @@
             id="page"
             description="Here description goes">
     </MessagePage>
-
 </mvc:View>

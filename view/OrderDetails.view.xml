@@ -1,13 +1,215 @@
 <mvc:View
         xmlns="sap.m"
+        xmlns:u="sap.uxap"
         xmlns:mvc="sap.ui.core.mvc"
+        xmlns:f="sap.ui.layout.form"
         controllerName="sasha.koroliova.app.controller.OrderDetails">
-
     <Page title="Order details"
           showNavButton="true"
           navButtonPress="onNavBack">
         <content>
-            <Button text="Show product" press="onNavToProduct"/>
+            <u:ObjectPageLayout>
+                <u:headerTitle>
+                    <u:ObjectPageHeader
+                            objectTitle="Order ({odata>id}), from { path: 'odata>summary/createdAt', formatter: '.dateFormatter'}"
+                            objectSubtitle="Total price {odata>summary/totalPrice} {odata>summary/currency} ">
+                    </u:ObjectPageHeader>
+                </u:headerTitle>
+                <u:headerContent>
+                    <VBox>
+                        <ObjectStatus
+                                title="Status"
+                                text="{odata>summary/status}"/>
+                        <ObjectStatus
+                                title="Customer"
+                                text="{odata>summary/customer}"/>
+                    </VBox>
+                </u:headerContent>
+                <u:sections>
+                    <u:ObjectPageSection
+                            titleUppercase="false"
+                            title="Ship info" >
+                        <u:subSections>
+                            <u:ObjectPageSubSection
+                                    titleUppercase="false"
+                                    title="Ship info">
+                                <u:blocks>
+                                    <f:SimpleForm
+                                            editable="false"
+                                            layout="ResponsiveGridLayout"
+                                            labelSpanL="4"
+                                            labelSpanM="2">
+                                        <f:toolbar>
+                                            <Toolbar>
+                                                <Title text="Ship To Form"/>
+                                                <Button icon="sap-icon://edit"/>
+                                            </Toolbar>
+                                        </f:toolbar>
+                                        <f:content>
+                                            <Label
+                                                    text="Ship to"
+                                                    labelFor="shipTo"/>
+                                            <Input
+                                                    id="shipTo"
+                                                    type="Text"
+                                                    value="{odata>shipTo/name}"/>
+                                            <Label
+                                                    text="Address"
+                                                    labelFor="address"/>
+                                            <Input
+                                                    id="address"
+                                                    type="Text"
+                                                    value="{odata>shipTo/address}"/>
+                                            <Label
+                                                    text="ZIP"
+                                                    labelFor="zip"/>
+                                            <Input
+                                                    id="zip"
+                                                    type="Number"
+                                                    value="{odata>shipTo/ZIP}"/>
+                                            <Label
+                                                    text="Region"
+                                                    labelFor="region"/>
+                                            <Input
+                                                    id="region"
+                                                    type="Text"
+                                                    value="{odata>shipTo/region}"/>
+                                            <Label
+                                                    text="Country"
+                                                    labelFor="country"/>
+                                            <Input
+                                                    id="country"
+                                                    type="Text"
+                                                    value="{odata>shipTo/country}"/>
+                                        </f:content>
+                                    </f:SimpleForm>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+                    <u:ObjectPageSection
+                            titleUppercase="false"
+                            title="Customer info">
+                        <u:subSections>
+                            <u:ObjectPageSubSection
+                                    titleUppercase="false"
+                                    title="Customer info">
+                                <u:blocks>
+                                    <f:SimpleForm
+                                            editable="false"
+                                            layout="ResponsiveGridLayout"
+                                            labelSpanM="2">
+                                        <f:toolbar>
+                                            <Toolbar>
+                                                <Title text="Customer info form"/>
+                                                <Button icon="sap-icon://edit"/>
+                                            </Toolbar>
+                                        </f:toolbar>
+                                        <f:content>
+                                            <Label
+                                                    text="First name"
+                                                    labelFor="firstName"/>
+                                            <Input
+                                                    id="firstName"
+                                                    type="Text"
+                                                    value="{odata>customerInfo/firstName}"/>
+                                            <Label
+                                                    text="Last name"
+                                                    labelFor="lastName"/>
+                                            <Input
+                                                    id="lastName"
+                                                    type="Text"
+                                                    value="{odata>customerInfo/lastName}"/>
+                                            <Label
+                                                    text="Address"
+                                                    labelFor="customerAddress"/>
+                                            <Input
+                                                    id="customerAddress"
+                                                    type="Text"
+                                                    value="{odata>customerInfo/address}"/>
+                                            <Label
+                                                    text="Phone"
+                                                    labelFor="phone"/>
+                                            <Input
+                                                    id="phone"
+                                                    type="Text"
+                                                    value="{odata>customerInfo/phone}"/>
+                                            <Label
+                                                    text="Email"
+                                                    labelFor="email"/>
+                                            <Input
+                                                    id="email"
+                                                    type="Text"
+                                                    value="{odata>customerInfo/email}"/>
+                                        </f:content>
+                                    </f:SimpleForm>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+                    <u:ObjectPageSection
+                            titleUppercase="false"
+                            title="Products">
+                        <u:subSections>
+                            <u:ObjectPageSubSection
+                                    titleUppercase="false"
+                                    title="Products">
+                                <u:blocks>
+                                    <Table
+                                            id="ProductsTable"
+                                            class="sapUiResponsiveMargin sapUiNoMarginTop"
+                                            items="{odata>products}"
+                                            includeItemInSelection="true"
+                                            width="auto"
+                                            mode="Delete">
+                                        <headerToolbar>
+                                            <OverflowToolbar>
+                                                <content>
+                                                    <ToolbarSpacer/>
+                                                    <Button icon="sap-icon://add"/>
+
+                                                </content>
+                                            </OverflowToolbar>
+                                        </headerToolbar>
+                                        <columns>
+                                            <Column>
+                                                <Text text="ID"/>
+                                            </Column>
+
+                                            <Column>
+                                                <Text text="Name"/>
+                                            </Column>
+
+                                            <Column>
+                                                <Text text="Price"/>
+                                            </Column>
+
+                                            <Column>
+                                                <Text text="Qty"/>
+                                            </Column>
+
+                                            <Column>
+                                                <Text text="Total price"/>
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem
+                                                    press="onOpenProductPagePress"
+                                                    type="Navigation">
+                                                <Text text="{odata>id}"/>
+                                                <Text text="{odata>name}"/>
+                                                <Text text="{odata>price}"/>
+                                                <Text text="{odata>quantity}"/>
+                                                <Text text="{odata>totalPrice}"/>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+                </u:sections>
+            </u:ObjectPageLayout>
         </content>
     </Page>
 
