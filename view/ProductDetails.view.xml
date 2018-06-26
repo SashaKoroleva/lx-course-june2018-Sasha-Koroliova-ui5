@@ -3,7 +3,7 @@
         xmlns:mvc="sap.ui.core.mvc"
         xmlns:f="sap.ui.layout.form"
         controllerName="sasha.koroliova.app.controller.ProductDetails">
-    <Page title="Product details"
+    <Page title="{i18n>ProductDetailsPageTitle}"
           showNavButton="true"
           navButtonPress="onNavBack">
         <content>
@@ -14,25 +14,35 @@
                     condensed="true">
                 <attributes>
                     <ObjectAttribute
-                            text="Quantity: {odata>quantity}, price: {odata>price}"/>
+                            text="{parts: [
+							'i18n>ProductProperties',
+							'odata>quantity',
+							'odata>price'
+							],
+							formatter: 'jQuery.sap.formatMessage'}"/>
                 </attributes>
             </ObjectHeader>
             <Panel class="sapUiContentPadding">
                 <content>
                     <HBox alignItems="Center">
-                        <Label text="Author name:" class="sapUiTinyMarginEnd" />
-                        <Input/>
-                        <Label text="Rating:" labelFor="productRating" class="sapUiTinyMarginEnd sapUiTinyMarginBegin"/>
-                        <RatingIndicator id="productRating" maxValue="5"/>
+                        <Label text="{i18n>AuthorName}" class="sapUiTinyMarginEnd"/>
+                        <Input id="author" value=""/>
+                        <Label text="{i18n>RatingLabel}" labelFor="rating"
+                               class="sapUiTinyMarginEnd sapUiTinyMarginBegin"/>
+                        <RatingIndicator id="rating" value="" maxValue="5"/>
                     </HBox>
-                    <FeedInput />
-                    <List   noDataText="No Comments"
-                            showSeparators="Inner"
-                            items="{#}">
+                    <FeedInput post="onCreateCommentPress"/>
+                    <List noDataText="{i18n>noDataText}"
+                          showSeparators="Inner"
+                          items="{odata>comments}">
                         <FeedListItem
-                                info="{#}"
-                                text="{#}"
-                                timestamp="{#}"/>
+                                sender="{odata>author}"
+                                info="{parts: [
+							    'i18n>RatingNumber',
+							    'odata>rating'
+							    ],
+							    formatter: 'jQuery.sap.formatMessage'}"
+                                text="{odata>comment}"/>
                     </List>
                 </content>
             </Panel>

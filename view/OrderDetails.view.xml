@@ -4,35 +4,46 @@
         xmlns:mvc="sap.ui.core.mvc"
         xmlns:f="sap.ui.layout.form"
         controllerName="sasha.koroliova.app.controller.OrderDetails">
-    <Page title="Order details"
+    <Page title="{i18n>OrderDetailsPageTitle}"
           showNavButton="true"
           navButtonPress="onNavBack">
         <content>
             <u:ObjectPageLayout>
                 <u:headerTitle>
                     <u:ObjectPageHeader
-                            objectTitle="Order ({odata>id}), from { path: 'odata>summary/createdAt', formatter: '.dateFormatter'}"
-                            objectSubtitle="Total price {odata>summary/totalPrice} {odata>summary/currency} ">
+                            objectTitle="{parts: [
+							'i18n>OrderTitle',
+							'odata>id',
+							{path: 'odata>summary/createdAt',
+							formatter: '.dateFormatter'}
+							],
+							formatter: 'jQuery.sap.formatMessage'}"
+                            objectSubtitle="{parts: [
+							'i18n>OrderSubtitle',
+							'odata>summary/totalPrice',
+							'odata>summary/currency'
+							],
+							formatter: 'jQuery.sap.formatMessage'}">
                     </u:ObjectPageHeader>
                 </u:headerTitle>
                 <u:headerContent>
                     <VBox>
                         <ObjectStatus
-                                title="Status"
+                                title="{i18n>Status}"
                                 text="{odata>summary/status}"/>
                         <ObjectStatus
-                                title="Customer"
+                                title="{i18n>Customer}"
                                 text="{odata>summary/customer}"/>
                     </VBox>
                 </u:headerContent>
                 <u:sections>
                     <u:ObjectPageSection
                             titleUppercase="false"
-                            title="Ship info" >
+                            title="{i18n>ShipInfo}">
                         <u:subSections>
                             <u:ObjectPageSubSection
                                     titleUppercase="false"
-                                    title="Ship info">
+                                    title="{i18n>ShipInfo}">
                                 <u:blocks>
                                     <f:SimpleForm
                                             editable="false"
@@ -41,46 +52,64 @@
                                             labelSpanM="2">
                                         <f:toolbar>
                                             <Toolbar>
-                                                <Title text="Ship To Form"/>
-                                                <Button icon="sap-icon://edit"/>
+                                                <Title text="{i18n>ShipFormTitle}"/>
+                                                <Button icon="sap-icon://edit" visible="{= !${appView>/editShipInfo} }"
+                                                        press="onEditShipInfoPress"/>
+                                                <Button icon="sap-icon://save" visible="{appView>/editShipInfo}"
+                                                        press="onSaveInfoPress"/>
+                                                <Button icon="sap-icon://cancel" visible="{appView>/editShipInfo}"
+                                                        press="onCancelChangesPress"/>
                                             </Toolbar>
                                         </f:toolbar>
                                         <f:content>
                                             <Label
-                                                    text="Ship to"
+                                                    text="{i18n>ShipTo}"
                                                     labelFor="shipTo"/>
                                             <Input
                                                     id="shipTo"
                                                     type="Text"
-                                                    value="{odata>shipTo/name}"/>
+                                                    value="{odata>shipTo/name}"
+                                                    visible="{appView>/editShipInfo}"/>
+                                            <Text text="{odata>shipTo/name}" visible="{= !${appView>/editShipInfo} }"/>
                                             <Label
-                                                    text="Address"
+                                                    text="{i18n>ShipToAddress}"
                                                     labelFor="address"/>
                                             <Input
                                                     id="address"
                                                     type="Text"
-                                                    value="{odata>shipTo/address}"/>
+                                                    value="{odata>shipTo/address}"
+                                                    visible="{appView>/editShipInfo}"/>
+                                            <Text text="{odata>shipTo/address}"
+                                                  visible="{= !${appView>/editShipInfo} }"/>
                                             <Label
-                                                    text="ZIP"
+                                                    text="{i18n>ZIP}"
                                                     labelFor="zip"/>
                                             <Input
                                                     id="zip"
                                                     type="Number"
-                                                    value="{odata>shipTo/ZIP}"/>
+                                                    value="{odata>shipTo/ZIP}"
+                                                    visible="{appView>/editShipInfo}"/>
+                                            <Text text="{odata>shipTo/ZIP}" visible="{= !${appView>/editShipInfo} }"/>
                                             <Label
-                                                    text="Region"
+                                                    text="{i18n>Region}"
                                                     labelFor="region"/>
                                             <Input
                                                     id="region"
                                                     type="Text"
-                                                    value="{odata>shipTo/region}"/>
+                                                    value="{odata>shipTo/region}"
+                                                    visible="{appView>/editShipInfo}"/>
+                                            <Text text="{odata>shipTo/region}"
+                                                  visible="{= !${appView>/editShipInfo} }"/>
                                             <Label
-                                                    text="Country"
+                                                    text="{i18n>Country}"
                                                     labelFor="country"/>
                                             <Input
                                                     id="country"
                                                     type="Text"
-                                                    value="{odata>shipTo/country}"/>
+                                                    value="{odata>shipTo/country}"
+                                                    visible="{appView>/editShipInfo}"/>
+                                            <Text text="{odata>shipTo/country}"
+                                                  visible="{= !${appView>/editShipInfo} }"/>
                                         </f:content>
                                     </f:SimpleForm>
                                 </u:blocks>
@@ -89,11 +118,11 @@
                     </u:ObjectPageSection>
                     <u:ObjectPageSection
                             titleUppercase="false"
-                            title="Customer info">
+                            title="{i18n>CustomerInfo}">
                         <u:subSections>
                             <u:ObjectPageSubSection
                                     titleUppercase="false"
-                                    title="Customer info">
+                                    title="{i18n>CustomerInfo}">
                                 <u:blocks>
                                     <f:SimpleForm
                                             editable="false"
@@ -101,46 +130,68 @@
                                             labelSpanM="2">
                                         <f:toolbar>
                                             <Toolbar>
-                                                <Title text="Customer info form"/>
-                                                <Button icon="sap-icon://edit"/>
+                                                <Title text="{i18n>CustomerInfoFormTitle}"/>
+
+                                                <Button icon="sap-icon://edit"
+                                                        visible="{= !${appView>/editClientInfo} }"
+                                                        press="onEditClientInfoPress"/>
+                                                <Button icon="sap-icon://save" visible="{appView>/editClientInfo}"
+                                                        press="onSaveInfoPress"/>
+                                                <Button icon="sap-icon://cancel" visible="{appView>/editClientInfo}"
+                                                        press="onCancelChangesPress"/>
                                             </Toolbar>
                                         </f:toolbar>
                                         <f:content>
                                             <Label
-                                                    text="First name"
+                                                    text="{i18n>FirstName}"
                                                     labelFor="firstName"/>
                                             <Input
                                                     id="firstName"
                                                     type="Text"
-                                                    value="{odata>customerInfo/firstName}"/>
+                                                    value="{odata>customerInfo/firstName}"
+                                                    visible="{appView>/editClientInfo}"/>
+                                            <Text text="{odata>customerInfo/firstName}"
+                                                  visible="{= !${appView>/editClientInfo} }"/>
                                             <Label
-                                                    text="Last name"
+                                                    text="{i18n>LastName}"
                                                     labelFor="lastName"/>
                                             <Input
                                                     id="lastName"
                                                     type="Text"
-                                                    value="{odata>customerInfo/lastName}"/>
+                                                    value="{odata>customerInfo/lastName}"
+                                                    visible="{appView>/editClientInfo}"/>
+                                            <Text text="{odata>customerInfo/lastName}"
+                                                  visible="{= !${appView>/editClientInfo} }"/>
                                             <Label
-                                                    text="Address"
+                                                    text="{i18n>Address}"
                                                     labelFor="customerAddress"/>
                                             <Input
                                                     id="customerAddress"
                                                     type="Text"
-                                                    value="{odata>customerInfo/address}"/>
+                                                    value="{odata>customerInfo/address}"
+                                                    visible="{appView>/editClientInfo}"/>
+                                            <Text text="{odata>customerInfo/address}"
+                                                  visible="{= !${appView>/editClientInfo} }"/>
                                             <Label
-                                                    text="Phone"
+                                                    text="{i18n>Phone}"
                                                     labelFor="phone"/>
                                             <Input
                                                     id="phone"
                                                     type="Text"
-                                                    value="{odata>customerInfo/phone}"/>
+                                                    value="{odata>customerInfo/phone}"
+                                                    visible="{appView>/editClientInfo}"/>
+                                            <Text text="{odata>customerInfo/phone}"
+                                                  visible="{= !${appView>/editClientInfo} }"/>
                                             <Label
-                                                    text="Email"
+                                                    text="{i18n>Email}"
                                                     labelFor="email"/>
                                             <Input
                                                     id="email"
-                                                    type="Text"
-                                                    value="{odata>customerInfo/email}"/>
+                                                    type="Email"
+                                                    value="{odata>customerInfo/email}"
+                                                    visible="{appView>/editClientInfo}"/>
+                                            <Text text="{odata>customerInfo/email}"
+                                                  visible="{= !${appView>/editClientInfo} }"/>
                                         </f:content>
                                     </f:SimpleForm>
                                 </u:blocks>
@@ -149,11 +200,11 @@
                     </u:ObjectPageSection>
                     <u:ObjectPageSection
                             titleUppercase="false"
-                            title="Products">
+                            title="{i18n>Products}">
                         <u:subSections>
                             <u:ObjectPageSubSection
                                     titleUppercase="false"
-                                    title="Products">
+                                    title="{i18n>Products}">
                                 <u:blocks>
                                     <Table
                                             id="ProductsTable"
@@ -161,35 +212,36 @@
                                             items="{odata>products}"
                                             includeItemInSelection="true"
                                             width="auto"
-                                            mode="Delete">
+                                            mode="Delete"
+                                            delete="onDeleteProductPress">
                                         <headerToolbar>
                                             <OverflowToolbar>
                                                 <content>
                                                     <ToolbarSpacer/>
-                                                    <Button icon="sap-icon://add"/>
+                                                    <Button icon="sap-icon://add" press="onCreateProductPress"/>
 
                                                 </content>
                                             </OverflowToolbar>
                                         </headerToolbar>
                                         <columns>
-                                            <Column>
-                                                <Text text="ID"/>
+                                            <Column minScreenWidth="750px" demandPopin="true">
+                                                <Text text="{i18n>ID}"/>
                                             </Column>
 
-                                            <Column>
-                                                <Text text="Name"/>
+                                            <Column minScreenWidth="750px" demandPopin="true">
+                                                <Text text="{i18n>Name}"/>
                                             </Column>
 
-                                            <Column>
-                                                <Text text="Price"/>
+                                            <Column minScreenWidth="750px" demandPopin="true">
+                                                <Text text="{i18n>Price}"/>
                                             </Column>
 
-                                            <Column>
-                                                <Text text="Qty"/>
+                                            <Column minScreenWidth="750px" demandPopin="true">
+                                                <Text text="{i18n>Quantity}"/>
                                             </Column>
 
-                                            <Column>
-                                                <Text text="Total price"/>
+                                            <Column minScreenWidth="750px" demandPopin="true">
+                                                <Text text="{i18n>TotalPrice}"/>
                                             </Column>
                                         </columns>
                                         <items>
@@ -200,7 +252,7 @@
                                                 <Text text="{odata>name}"/>
                                                 <Text text="{odata>price}"/>
                                                 <Text text="{odata>quantity}"/>
-                                                <Text text="{odata>totalPrice}"/>
+                                                <Text text="{odata>totalPrice} {odata>currency}"/>
                                             </ColumnListItem>
                                         </items>
                                     </Table>

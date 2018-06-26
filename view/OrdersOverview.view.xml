@@ -2,26 +2,28 @@
         xmlns="sap.m"
         xmlns:mvc="sap.ui.core.mvc"
         controllerName="sasha.koroliova.app.controller.OrdersOverview">
-    <Page title="Orders overview">
+    <Page title="{i18n>OrdersPageTitle}">
         <content>
-            <IconTabBar>
+            <IconTabBar select="handleIconTabBarSelect">
                 <items>
                     <IconTabFilter
                             key="all"
                             showAll="true"
-                            text="All orders"
+                            text="{i18n>AllOrdersFilter}"
                             count="{appView>/ordersCount}"/>
                     <IconTabSeparator/>
                     <IconTabFilter
                             key="pending"
                             icon="sap-icon://pending"
                             iconColor="Negative"
-                            text="Pending"/>
+                            text="{i18n>PendingOrdersFilter}"
+                            count="{appView>/pendingOrdersCount}"/>
                     <IconTabFilter
                             key="accepted"
                             icon="sap-icon://accept"
                             iconColor="Positive"
-                            text="Accepted"/>
+                            text="{i18n>AcceptedOrdersFilter}"
+                            count="{appView>/acceptedOrdersCount}"/>
                 </items>
                 <content>
                     <Table
@@ -30,37 +32,39 @@
                             items="{odata>/Orders}"
                             includeItemInSelection="true"
                             width="auto"
-                            mode="Delete">
+                            mode="Delete"
+                            delete="onDeleteOrderPress">
                         <headerToolbar>
                             <OverflowToolbar>
                                 <content>
                                     <ToolbarSpacer/>
-                                    <Button icon="sap-icon://add"/>
+                                    <Button icon="sap-icon://add" press="onCreateOrderPress"/>
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>
                         <columns>
-                            <Column>
-                                <Text text="ID"/>
+                            <Column minScreenWidth="850px" demandPopin="true">
+                                <Text text="{i18n>ID}"/>
                             </Column>
-                            <Column>
-                                <Text text="Customer"/>
+                            <Column minScreenWidth="850px" demandPopin="true">
+                                <Text text="{i18n>Customer}"/>
                             </Column>
-                            <Column>
-                                <Text text="Created at"/>
+                            <Column minScreenWidth="850px" demandPopin="true">
+                                <Text text="{i18n>CreatedAt}"/>
                             </Column>
-                            <Column>
-                                <Text text="Shipped at"/>
+                            <Column minScreenWidth="850px" demandPopin="true">
+                                <Text text="{i18n>ShippedAt}"/>
                             </Column>
-                            <Column>
-                                <Text text="Status"/>
+                            <Column minScreenWidth="850px" demandPopin="true">
+                                <Text text="{i18n>Status}"/>
                             </Column>
-                            <Column
+                            <Column minScreenWidth="850px"
+                                    demandPopin="true"
                                     hAlign="End">
-                                <Text text="Total price"/>
+                                <Text text="{i18n>TotalPrice}"/>
                             </Column>
-                            <Column>
-                                <Text text="Ship country"/>
+                            <Column minScreenWidth="850px" demandPopin="true">
+                                <Text text="{i18n>ShipCountry}"/>
                             </Column>
                         </columns>
                         <items>
@@ -69,12 +73,10 @@
                                     type="Navigation">
                                 <Text text="{odata>id}"/>
                                 <Text text="{odata>summary/customer}"/>
-                                <Text text="{
-                                         path: 'odata>summary/createdAt',
-                                         formatter: '.dateFormatter'}"/>
-                                <Text text="{
-                                        path: 'odata>summary/shippedAt',
-                                        formatter: '.dateFormatter'}"/>
+                                <Text text="{path: 'odata>summary/createdAt',
+                                             formatter: '.dateFormatter'}"/>
+                                <Text text="{path: 'odata>summary/shippedAt',
+                                             formatter: '.dateFormatter'}"/>
                                 <Text text="{odata>summary/status}"/>
                                 <Text text="{odata>summary/totalPrice}"/>
                                 <Text text="{odata>shipTo/region}"/>

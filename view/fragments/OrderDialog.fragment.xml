@@ -1,0 +1,88 @@
+<core:FragmentDefinition
+        xmlns="sap.m"
+        xmlns:f="sap.ui.layout.form"
+        xmlns:core="sap.ui.core">
+    <Dialog
+            id="OrderDialog"
+            title="{i18n>OrderDialogTitle}">
+        <f:SimpleForm
+                id="OrderCreationForm"
+                maxContainerCols="1"
+                layout="ResponsiveGridLayout"
+                labelSpanL="12"
+                labelSpanM="12"
+                emptySpanL="0"
+                emptySpanM="0"
+                columnsL="1"
+                columnsM="1">
+            <f:content>
+                <Label text="{i18n>Customer}"
+                       required="true"/>
+                <Input id="customerInput"
+                       type="Text"
+                       value="{
+					path: 'summary/customer',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 3
+					}
+				}"/>
+
+                <Label text="{i18n>Phone}"
+                       required="true"/>
+                <Input id="phoneInput" type="Tel" value="{
+					path: 'customerInfo/phone',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 7
+					}
+				}"/>
+
+                <Label text="{i18n>Region}"
+                       required="true"/>
+                <Input id="regionInput" type="Text" value="{
+					path: 'shipTo/region',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 3
+					}
+				}"/>
+
+                <Label text="{i18n>Country}"
+                       required="true"/>
+                <Input id="countryInput" type="Text" value="{
+					path: 'shipTo/country',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 3
+					}
+				}"/>
+
+                <Label text="{i18n>ShipToAddress}"
+                       required="true"/>
+                <Input id="addressInput" type="Text" value="{
+					path: 'shipTo/address',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 3
+					}
+				}"/>
+
+                <Label text="{i18n>Currency}"
+                       required="true"/>
+                <Input id="currencyInput" type="Text" value="{
+					path: 'summary/currency',
+					type: 'sap.ui.model.type.String',
+					constraints: {
+						minLength: 2
+					}
+				}"/>
+            </f:content>
+        </f:SimpleForm>
+
+        <buttons>
+            <Button text="{i18n>CreateButton}" press="onDialogCreatePress"/>
+            <Button text="{i18n>CloseButton}" press="onDialogCancelPress"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

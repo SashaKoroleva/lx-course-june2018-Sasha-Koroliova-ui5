@@ -17,6 +17,11 @@ sap.ui.define([
             });
             this.setModel(oODataModel, "odata");
 
+            var oResourceModel = new sap.ui.model.resource.ResourceModel({
+                bundleName: "sasha.koroliova.app.i18n.i18n"
+            });
+            this.setModel(oResourceModel, "i18n");
+
             this.getRouter().initialize();
         }
     });

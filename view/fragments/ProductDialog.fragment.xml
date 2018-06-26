@@ -1,0 +1,79 @@
+<core:FragmentDefinition
+        xmlns="sap.m"
+        xmlns:f="sap.ui.layout.form"
+        xmlns:core="sap.ui.core">
+    <Dialog
+            id="ProductDialog"
+            title="{i18n>ProductDialogTitle}">
+        <f:SimpleForm
+                maxContainerCols="1"
+                layout="ResponsiveGridLayout"
+                labelSpanL="12"
+                labelSpanM="12"
+                emptySpanL="0"
+                emptySpanM="0"
+                columnsL="1"
+                columnsM="1">
+            <f:content>
+                <Label text="{i18n>Name}"
+                       required="true"/>
+                <Input id="nameInput"
+                       type="Text"
+                       value="{path: 'name',
+                               type: 'sap.ui.model.type.String',
+					           constraints: {
+						            minLength: 3
+					           }
+                 }"/>
+
+                <Label text="{i18n>Price}"
+                       required="true"/>
+                <Input id="priceInput"
+                       value="{path: 'price',
+                               type: 'sap.ui.model.type.Float',
+					           constraints: {
+						             minimum: 0.01
+					           }
+				}"/>
+
+                <Label text="{i18n>Quantity}"
+                       required="true"/>
+                <Input id="qtyInput"
+                       type="Number"
+                       value="{path: 'quantity',
+                               type: 'sap.ui.model.type.Integer',
+					           constraints: {
+						             minimum: 1
+			                   }
+			    }"/>
+
+                <Label text="{i18n>TotalPrice}"
+                       required="true"/>
+                <Input id="totalPriceInput"
+                       value="{path: 'totalPrice',
+                               type: 'sap.ui.model.type.Float',
+					           constraints: {
+						             minimum: 0.01
+			                   }
+			    }"/>
+
+                <Label text="{i18n>Currency}"
+                       required="true"/>
+                <Input id="currencyInput"
+                       type="Text"
+                       value="{path: 'currency',
+                               type: 'sap.ui.model.type.String',
+					           constraints: {
+						            minLength: 2
+					           }
+			    }"/>
+
+            </f:content>
+        </f:SimpleForm>
+
+        <buttons>
+            <Button text="{i18n>CreateButton}" press="onDialogCreatePress"/>
+            <Button text="{i18n>CloseButton}" press="onDialogCancelPress"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
